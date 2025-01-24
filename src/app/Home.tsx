@@ -64,8 +64,8 @@ export default function Home() {
             Meta Bifrost
           </h1>
           <p className="text-center text-white/90 text-lg max-w-2xl mx-auto leading-relaxed">
-            커리어리에 URL을 붙여넣을 때 
-            <span className="font-semibold">메타데이터 읽기 실패</span>로 
+            커리어리에 URL을 붙여넣을 때
+            <span className="font-semibold"> 메타데이터 읽기 실패</span>로 
             포스팅이 안되시나요?
             <br />
             <span className="inline-block mt-2 font-medium">
