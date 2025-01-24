@@ -13,6 +13,12 @@ export const metadata: Metadata = {
       height: 630,
       alt: 'Meta Bifrost Preview'
     }]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Meta Bifrost - URL Shortener',
+    description: 'Meta Bifrost로 URL을 한번 감싸서 안전하게 공유해보세요.',
+    images: ['/og_image.jpeg']
   }
 }
 
