@@ -203,7 +203,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative pt-16 pb-20">
+        <div className="relative pt-16">
           {/* Remove lg:grid-cols-2, change to flex column */}
           <div className="flex flex-col">
             <div className="mb-8">
@@ -291,7 +291,7 @@ export default function Home() {
           </div>
         </div>
 
-        <footer className="mt-12 pt-8 border-t border-gray-200">
+        <footer className="pt-8 border-t border-gray-200">
           <div className="text-center text-gray-600">
             <p className="mb-4">
               Made with ❤️ by{" "}
