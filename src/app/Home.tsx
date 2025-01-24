@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import {
   getAuth,
@@ -18,17 +18,12 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const checkViewport = () => {
-      setIsDesktop(window.innerWidth >= 1024); // lg breakpoint
-    };
-    
-    checkViewport();
-    window.addEventListener('resize', checkViewport);
-    return () => window.removeEventListener('resize', checkViewport);
-  }, []);
+    // Focus on new input when it appears
+    inputRef.current?.focus();
+  }, [currentStep]);
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -99,7 +94,20 @@ export default function Home() {
     setImage("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !isNextButtonDisabled()) {
+      e.preventDefault();
+      handleNextClick();
+    }
+  };
+
   const renderInputField = (step: number) => {
+    const commonProps = {
+      className: "w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+      onKeyDown: handleKeyDown,
+      ref: step === currentStep ? inputRef : undefined
+    };
+
     switch (step) {
       case 1:
         return (
@@ -112,7 +120,7 @@ export default function Home() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="redirect할 URL을 입력해주세요."
-              className="w-full p-3 border rounded-lg shadow-sm"
+              {...commonProps}
             />
           </div>
         );
@@ -127,7 +135,7 @@ export default function Home() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="표시할 제목을 입력해주세요"
-              className="w-full p-3 border rounded-lg shadow-sm"
+              {...commonProps}
             />
           </div>
         );
@@ -142,7 +150,7 @@ export default function Home() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="표시할 설명을 입력해주세요"
-              className="w-full p-3 border rounded-lg shadow-sm"
+              {...commonProps}
             />
           </div>
         );
@@ -157,7 +165,7 @@ export default function Home() {
               value={image}
               onChange={(e) => setImage(e.target.value)}
               placeholder="표시할 이미지 URL을 입력해주세요. 이미지가 있을 때 더 많은 클릭을 유도할 수 있습니다."
-              className="w-full p-3 border rounded-lg shadow-sm"
+              {...commonProps}
             />
           </div>
         );
