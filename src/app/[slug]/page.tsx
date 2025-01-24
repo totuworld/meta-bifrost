@@ -26,6 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...(data?.description && { description: data.description }),
       ...(data?.image && { images: [data.image] }),
     },
+    // 트위터 메타데이터
+    twitter: {
+      card: "summary_large_image",
+      title: data?.title,
+      ...(data?.description && { description: data.description }),
+      ...(data?.image && { images: [data.image] }),
+    },
   };
 }
  
