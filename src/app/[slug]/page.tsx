@@ -1,6 +1,7 @@
-import { adminDb } from "@/firebase/adminDb";
-import { redirect } from "next/navigation";
 import { Metadata } from "next";
+
+import { adminDb } from "@/firebase/adminDb";
+import Client from './client' // This is a Client Component
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,15 +28,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
-
-export default async function SlugPage({ params }: Props) {
+ 
+export default async function Page({ params }: Props) {
   const { slug } = await params;
+
   const docSnap = await adminDb.collection("urls").doc(slug).get();
 
   if (!docSnap.exists) {
-    return <div className="text-center py-20">URL not found</div>;
+    return {}
   }
 
   const data = docSnap.data();
-  redirect(data?.originalUrl);
+
+  return (
+    <div>
+      <Client params={params} data={{originalUrl: data?.originalUrl}} />
+    </div>
+  )
 }
